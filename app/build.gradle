@@ -9,6 +9,9 @@ android {
     namespace 'com.example.myass01'
     compileSdk 33
 
+    dataBinding {   //data binding
+        enabled = true
+    }
 
 
     defaultConfig {
