@@ -40,13 +40,12 @@ class GithubFragment : Fragment() {
         recycleView.adapter = adapter
         recycleView.layoutManager = LinearLayoutManager(binding.root.context)
 
-        viewModel.users.observe(viewLifecycleOwner, Observer { users->
-            adapter.setSims(users)
+        viewModel.users.observe(viewLifecycleOwner, Observer { it->
+            adapter.users(it)   
         })
 
-        binding.viewModel = viewModel
+        //binding.viewModel = viewModel
         binding.lifecycleOwner = this //viewLifecycleOwner
-
         return binding.root
 //        return inflater.inflate(R.layout.fragment_github, container, false)  --> comment it for above binding return
     }

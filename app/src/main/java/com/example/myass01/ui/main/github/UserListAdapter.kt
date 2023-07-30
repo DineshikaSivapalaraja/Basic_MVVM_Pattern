@@ -2,18 +2,12 @@ package com.example.myass01.ui.main.github
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.NonNull
-import androidx.appcompat.view.menu.ActionMenuItemView
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.livedata.ktx.R
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myass01.databinding.FragmentGithubBinding
 import com.example.myass01.databinding.GithubUserViewBinding
-import java.security.AccessControlContext
 
 
 class UserListAdapter internal constructor(
@@ -22,20 +16,20 @@ class UserListAdapter internal constructor(
     private val viewModel:GithubViewModel
 ): RecyclerView.Adapter<UserListAdapter.UserViewHolder>() {
 
-    private var sims = emptyList<GithubUser>()
+    private var githubUsers = emptyList<GithubUser>()
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
     inner class UserViewHolder(
         itemView: View,
         private val binding: GithubUserViewBinding,
-        private val viewModel: GithubViewModel,
+//        private val viewModel: GithubViewModel,
         private val lifecycleOwner: LifecycleOwner
     ):RecyclerView.ViewHolder(itemView) {
 
-        fun bind(item: GithubUser) {
+        fun bind(githubUser: GithubUser) {
             //binding
-            binding.item = item
-            binding.viewModel = viewModel
+            binding.githubUser = githubUser
+//            binding.viewModel = viewModel
             binding.executePendingBindings()
             binding.lifecycleOwner = lifecycleOwner
         }
@@ -47,24 +41,24 @@ class UserListAdapter internal constructor(
 //    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val binding = GithubUserViewBinding.inflate(inflater, parent, false)
-        return UserViewHolder(binding.root,binding,viewModel,lifecycleOwner)
+        return UserViewHolder(binding.root,binding,lifecycleOwner) //viewModel-. has to come inside the () but we ignore Viewmodel and we can run same app with and without vm
     }
 
     override fun onBindViewHolder( @NonNull holder: UserViewHolder, position: Int, payloads: MutableList<Any>) {
-        holder.bind(sims[position])
+        holder.bind(githubUsers[position])
     }
 
     override fun getItemCount(): Int {
-        return sims.size
+        return githubUsers.size
     }
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
-        val current = sims[position]
+        val current = githubUsers[position]
         holder.bind(current)
     }
 
-    fun setSims(it: List<GithubUser>) {
-        this.sims = it
+    fun users(it: List<GithubUser>) {
+        this.githubUsers = it
         notifyDataSetChanged()
     }
 
